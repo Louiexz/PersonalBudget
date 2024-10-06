@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Update "{{ transaction.item }}" {% endblock %}
+
+{% block nav %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand disabled" aria-disabled="true">Financial Manager</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link disabled" aria-disabled="true">Dashboard</a>
+                    <a class="nav-link disabled" aria-disabled="true">Goals</a>
+                    <a class="nav-link disabled" aria-disabled="true">Budgets</a>
+                    <a class="nav-link disabled" aria-disabled="true">Transactions</a>
+                    <a class="nav-link disabled" aria-disabled="true">Reports</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block container %}
+    <h3>Update Transaction</h3>
+    <form method="post" id="transaction_up">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="{% url 'transaction-list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock%}

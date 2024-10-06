@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title  %}Transaction category{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'personalbudgets/css/index.css'%}">
+{% endblock %}
+
+{% block container %}
+    <h3>Create Transaction Category</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="buttons">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a href="{% url 'transaction' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+{% endblock%}

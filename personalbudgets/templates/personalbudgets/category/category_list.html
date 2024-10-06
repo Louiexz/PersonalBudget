@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Categories {% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'personalbudgets/css/lista.css'%}">
+{% endblock %}
+
+{% block container %}
+    <h3>New Category</h3>
+    <form method="post" action="{% url 'category-create'%}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+
+    {% if categories %}
+        <h3>Choose a category</h3>
+        <form method="get" action="{% url 'category-list' %}">
+            {% csrf_token %}
+            <label for="category">Select category:</label>
+            <select name="category" id="category">
+                <option value>--Select a category--</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">
+                        {{ category.category }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">View category</button>
+        </form>
+    {% else %}
+        <p>No category data available.</p>
+    {% endif %}
+    {% if selected_category %}
+        <h3>Selected category Details</h3>
+        <div class="category">
+            <div class="itens">
+                <p><strong>Category:</strong> {{ selected_category.category }}</p>
+                <p><strong>Notes:</strong> {{ selected_category.notes }}</p>
+                <p><strong>Created at:</strong> {{ selected_category.created_at }}</p>
+                <p><strong>Last update:</strong> {{ selected_category.updated_at }}</p>
+            </div>
+            <div class="buttons">
+                <form method="get" action="{% url 'transaction-list' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="category" id="category" value="{{ selected_category.id }}">
+                    <button type="submit" class="btn btn-secondary">View Transactions</button>
+                </form>          
+                <form method=get action="{% url 'category-update' selected_category.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">Update category</button>
+                </form>
+
+                <form method=get
+                    action="{% url 'category-delete' selected_category.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="category" id="category" value="{{ selected_category.id }}">
+                    <button type="submit" class="btn btn-danger">Delete category</button>
+                </form>
+            </div>
+        </div>
+    {% elif categories %}
+        <p>Select a category to view details.</p>
+    {% endif %}
+    
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}New Transaction{% endblock %}
+
+{% block container %}
+    <h3>Create Transaction</h3>
+    <form method="post">
+        {% csrf_token %}
+        {% if transaction %}
+            <p>
+                <strong>Selected Budget:</strong> {{transaction.budget}}
+                <strong>Remaining:</strong> {{transaction.remaining_amount}}
+            </p>
+            <input type="hidden" id="id_budget_id" name="budget_id"
+                value="{{ transaction.id }}">
+        {% endif %}
+        {{ form|crispy }}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <div class="buttons">
+            <button type="submit" class="btn btn-success">Save</button>
+            <a href="{% url 'transaction-list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+{% endblock%}

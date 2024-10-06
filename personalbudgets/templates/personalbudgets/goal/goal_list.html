@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %} Goals {% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'personalbudgets/css/lista.css'%}">
+{% endblock %}
+
+{% block container %}
+    <h3>New goal</h3>
+    <form method="post" action="{% url 'goal-create'%}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+
+    {% if goals %}
+        <h3>Choose a goal</h3>
+        <form method="get" action="{% url 'goal-list' %}">
+            {% csrf_token %}
+            <label for="goal">Select goal:</label>
+            <select name="goal" id="goal">
+                <option value>--Select a goal--</option>
+                {% for goal in goals %}
+                    <option value="{{ goal.id }}">
+                        {{ goal.goal }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary">View goal</button>
+        </form>
+    {% else %}
+        <p>No goal data available.</p>
+    {% endif %}
+    {% if selected_goal %}
+        <h3>Selected goal Details</h3>
+        <div class="goal">
+            <div class="itens">
+                <p><strong>Title:</strong> {{ selected_goal.title }}</p>
+                <p><strong>Notes:</strong> {{ selected_goal.notes }}</p>
+                <p><strong>Created at:</strong> {{ selected_goal.created_at }}</p>
+                <p><strong>Last update:</strong> {{ selected_goal.updated_at }}</p>
+                <p><strong>Due date:</strong> {{ selected_goal.due_date }}</p>
+                <p><strong>Status:</strong> {{ selected_goal.status }}</p>
+            </div>
+            <div class="buttons">
+                <form method=get action="{% url 'goal-update' selected_goal.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary">Update goal</button>
+                </form>
+                {% if selected_goal.status != "Completed" or "Not Completed" %}
+                    <form method="get"
+                        action="{% url 'goal-paid' selected_goal.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="goal" id="goal" value="{{ selected_goal.id }}">
+                        <button type="submit" class="btn btn-danger">Paid goal?</button>
+                    </form>
+                {% endif %}
+                <form method=get
+                    action="{% url 'goal-delete' selected_goal.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="goal" id="goal" value="{{ selected_goal.id }}">
+                    <button type="submit" class="btn btn-danger">Delete goal</button>
+                </form>
+            </div>
+        </div>
+    {% elif goals %}
+        <p>Select a goal to view details.</p>
+    {% endif %}
+    
+{% endblock %}

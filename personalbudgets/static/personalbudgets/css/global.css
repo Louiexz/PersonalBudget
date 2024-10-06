@@ -1,0 +1,27 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+.summary, .buttons {
+    display: flex;
+}
+.summary {
+    padding: 80px 10px;
+    min-height: 99dvh;
+    max-width: 100%;
+    flex-direction: column;
+    gap: 20px 0px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.buttons {
+    justify-content: space-around;
+}
+
+@media (min-width: 1000px) {
+    .navbar {
+        position: fixed;
+        width: 100%;
+    }   
+}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title  %}Home{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'personalbudgets/css/index.css'%}">
+{% endblock %}
+
+{% block container %}
+    <div>
+        <h2>Welcome, {{ budgets.username }}!</h2>
+        <p>Track and manage your finances efficiently. Use the
+            navigation above to access different sections of the
+            financial manager.</p>
+    </div>
+    <div>
+        <h3>Budget Summary</h3>
+        <br>
+        <p><strong>Total Budgets Quantity:</strong> {{ budgets.total_budgets }}</p>
+        <p><strong>Total Budgets Amount:</strong> ${{ budgets.total_amount }}</p>
+        <p><strong>Total Spents:</strong> ${{ budgets.total_spent }}</p>
+        <p><strong>Total Remaining:</strong> ${{ budgets.total_remaining }}</p>
+    </div>
+    <div>
+        <h3>Goals Summary</h3>
+        <br>
+        <p><strong>Total Goals Quantity:</strong> {{ goals.total_goals }}</p>
+        <p><strong>Total Goals Amount:</strong> ${{ goals.total_amount }}</p>
+        <p><strong>Total Pending:</strong> ${{ goals.pending_amount }}</p>
+        <p><strong>Total Remaining:</strong> ${{ goals.total_remaining }}</p>
+    </div>
+{% endblock %}
