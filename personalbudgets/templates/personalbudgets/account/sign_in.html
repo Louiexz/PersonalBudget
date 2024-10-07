@@ -6,17 +6,26 @@
 
 {% block nav %}{% endblock %}
 
+{% block links %}
+    <style type=text/css>
+        div {
+            padding: 8px 0px;
+        }
+    </style>
+{% endblock %}
+
 {% block container %}
-    <h3>Login</h3>
+    <h3 align=center>Login</h3>
     <form method="post">
         {% csrf_token %}
-        <div>
-            <label for="username">User:</label>
-            <input id="username" name="username" required>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Username:</span>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Password:</span>
+            <input type="text" class="form-control" id="password" name="password" 
+            placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
         </div>
         <div class="buttons">
             <button type="submit" class="btn btn-success">Enter</button>

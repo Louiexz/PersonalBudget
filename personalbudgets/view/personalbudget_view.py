@@ -37,10 +37,13 @@ class PersonalBudgetListView(LoginRequiredMixin, ListView):
 
         count = goal.count()
         total_goals = count if count > 0 else 0
-        goal_total_amount = goal.aggregate(total_amount=Sum("total_amount"))["total_amount"] or 0
         
+        goal_total_amount = goal.aggregate(total_amount=Sum("total_amount"))["total_amount"] or 0
         pending_amount = goal.aggregate(pending_amount=Sum("pending_amount"))["pending_amount"] or 0
-        goal_total_remaining = goal_total_amount - pending_amount 
+        goal_total_remaining = 0
+
+        if pending_amount < goal_total_amount:
+            goal_total_remaining = goal_total_amount - pending_amount
 
         context["goals"] = {
             "total_goals": total_goals,
