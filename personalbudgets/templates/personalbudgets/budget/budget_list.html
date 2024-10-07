@@ -5,7 +5,25 @@
 {% block title %} Budgets {% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href="{% static 'personalbudgets/css/lista.css'%}">
+    <style type="text/css">
+        .itens {
+            display: grid;
+            grid-template-columns: repeat(4, 300px);
+        }
+        
+        @media (max-width: 700px) {
+            .itens {
+                grid-template-columns: repeat(2, 1fr); /* Usar 1fr para flexibilidade */
+                column-gap: 10px;
+            }
+        }
+        
+        @media (min-width: 4000px) {
+            .itens {
+                grid-template-columns: repeat(4, 300px); /* Mantém o mesmo comportamento */
+            }
+        }        
+    </style>
 {% endblock %}
 
 {% block container %}
