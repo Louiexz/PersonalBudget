@@ -1,13 +1,18 @@
 # PersonalBudget
 Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
 
-## Funcionalidades
+# PersonalBudget
+Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
 
-    Chat em Tempo Real: Mensagens são enviadas e recebidas instantaneamente sem a necessidade de atualizar a página.
-    Múltiplos Usuários: Vários usuários podem se conectar ao chat ao mesmo tempo.
-    Sala de Chat: Os usuários podem enviar mensagens para todos na sala.
-    Histórico de Mensagens: O chat mantém um histórico das mensagens recentes.
-    Interface Simples: Interface web simples e intuitiva.
+## Funcionalidades e/ou (Páginas)
+
+    Users: Permite que novos usuários criem uma conta.
+    Goals: Permitir que os usuários estabeleçam, monitorem e gerenciem suas metas financeiras, como economizar para uma viagem.
+    Budgets: Permitir que os usuários criem, gerenciem e monitorem orçamentos, ajudando-os a controlar suas finanças.
+    Transactions categories: Facilitar a organização e análise das transações financeiras dos usuários, permitindo que eles categorizaram suas receitas.
+    Transactions: Permitir que os usuários registrem, organizem e analisem suas transações financeiras.
+    Dashboard: Fornecer uma visão consolidada e interativa das finanças do usuário, permitindo que ele monitore seus orçamentos, metas, categorias de transações e transações de forma rápida e eficiente.
+
 
 ## Pré-requisitos
 
