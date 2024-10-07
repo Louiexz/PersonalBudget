@@ -2,9 +2,7 @@
 __pycache__/
 db.sqlite3
 /media
-/staticfiles
 *.log
-.env
 *.pot
 *.py[cod]
 *.egg-info/
