@@ -8,7 +8,7 @@
 
 {% block container %}
     <h3>Register</h3>
-    <form method="post"">
+    <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
         <div class="buttons">
