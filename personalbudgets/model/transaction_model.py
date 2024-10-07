@@ -2,6 +2,7 @@ from .models import *
 
 from .budget_model import PersonalBudget
 from .category_model import Category
+from dateutil.relativedelta import relativedelta
 
 class Transaction(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -20,20 +21,31 @@ class Transaction(models.Model):
     category = models.ForeignKey(Category, related_name="transactions", on_delete=models.CASCADE)
 
     def clean(self):
+        if self.validity and self.created_at is None: return
         if self.validity < dates.today():
             raise ValidationError("Validity date cannot be in the past.")
         if self.price < 0:
             raise ValidationError("Transaction price cannot be negative.")
         if self.remaining_installment < 0:
             raise ValidationError("Remaining installments must be positive.")
+    
+    def valide(self):
+        if self.status == "To Pay":
+            self.status = "Paid"
+            if self.remaining_installment > 0:
+                self.validity += relativedelta(months=1)
+                self.remaining_installment -= 1
+        if self.created_at > self.validity:
+            self.status = "To Pay"
 
     def save(self, *args, **kwargs):
-        self.clean()
         if self.budget.remaining_amount < self.price:
             raise ValidationError("Transaction price exceeds remaining budget.")
         if self.budget.status != "Expired":
+            self.clean()
+            self.valide()
             super().save(*args, **kwargs)
-            self.budget.update_budget()
+            self.budget.save()
         else:
             raise ValidationError("Expired budget.")
 

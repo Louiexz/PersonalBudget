@@ -1,7 +1,7 @@
+from personalbudgets.forms import CategoryForm
 from .views import *
 
 from ..model import Category
-
 class CategoryList(LoginRequiredMixin, ListView):
     model = Category
     template_name = "personalbudgets/category/category_list.html"
@@ -20,8 +20,9 @@ class CategoryList(LoginRequiredMixin, ListView):
 
 class CategoryCUD():
     model = Category
-    fiels = ["name", "notes"]
+    form_class = CategoryForm
     success_url = reverse_lazy("category-list")
+    login_url = 'sign-in'  # Define a URL de login
 
 class CategoryCreate(LoginRequiredMixin, CategoryCUD, CreateView):
     template_name = "personalbudgets/category/category_form.html"

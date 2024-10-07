@@ -5,6 +5,7 @@ from ..model import PersonalBudget, Goal
 
 class PersonalBudgetListView(LoginRequiredMixin, ListView):
     model = PersonalBudget
+    login_url = 'sign-in'  # Define a URL de login
 
     def get_queryset(self):
         # Filtra os orçamentos do usuário logado

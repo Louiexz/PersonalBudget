@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block container %}
+    <h2>Budgets</h2>
+    <p>"A well-planned budget is the first step in turning dreams into reality."</p>
     <h3>New Budget</h3>
     <form method="post" action="{% url 'budget-create'%}">
         {% csrf_token %}

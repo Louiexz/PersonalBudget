@@ -27,6 +27,7 @@ class SignIn(View):
 class SignUp(CreateView):
     form_class = UserRegistrationForm
     template_name = "personalbudgets/account/sign_up.html"
+    success_url = reverse_lazy("sign_in")
     
     def form_valid(self, form):
         user = form.save(commit=False)

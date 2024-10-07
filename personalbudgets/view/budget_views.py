@@ -15,6 +15,7 @@ class BudgetList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['budgets'] = self.get_queryset()
         budget_id = self.request.GET.get("budget")
+        
         if budget_id:
             context['selected_budget'] = get_object_or_404(self.get_queryset(), id=budget_id)
         return context
@@ -23,6 +24,8 @@ class BudgetCUD():
     model = PersonalBudget
     form_class = BudgetForm
     success_url = reverse_lazy("budget-list")
+
+    login_url = 'sign-in'  # Define a URL de login
 
 class BudgetCreate(LoginRequiredMixin, BudgetCUD, CreateView):
     template_name = "personalbudgets/budget/budget_form.html"

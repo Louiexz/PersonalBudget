@@ -17,6 +17,7 @@ class PersonalBudget(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='budgets')
 
     def clean(self):
+        if self.validity is None: return
         if self.validity < dates.today():
             self.status = "Expired"
         else:

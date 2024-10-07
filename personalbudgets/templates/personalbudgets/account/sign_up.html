@@ -8,19 +8,19 @@
 
 {% block container %}
     <h3>Register</h3>
-    <form method="post">
+    <form method="post"">
         {% csrf_token %}
         {{ form|crispy }}
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
         <div class="buttons">
             <button type="submit" class="btn btn-success">Confirm</button>
             <a href="{% url 'sign-in' %}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

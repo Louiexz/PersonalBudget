@@ -13,7 +13,7 @@ goals = [
     path('goals/create', GoalCreate.as_view(), name='goal-create'),
     path('goals/update/<uuid:pk>', GoalUpdate.as_view(), name='goal-update'),
     path('goals/delete/<uuid:pk>', GoalDelete.as_view(), name='goal-delete'),
-    path('goals/paid/<uuid:pk>', GoalPaid.as_view(), name='goal-paid'),
+    path('goals/add/<uuid:pk>', GoalAdd.as_view(), name='goal-add'),
 ]
 categories = [
     path('categories', CategoryList.as_view(), name='category-list'),
@@ -23,6 +23,7 @@ categories = [
 ]
 transactions = [
     path('transactions', TransactionList.as_view(), name='transaction-list'),
+    path('transactions/category/', TransactionList.as_view(), name='transaction-category'),
     path('transactions/create', TransactionCreate.as_view(), name='transaction-create'),
     path('transactions/update/<uuid:pk>', TransactionUpdate.as_view(), name='transaction-update'),
     path('transactions/delete/<uuid:pk>', TransactionDelete.as_view(), name='transaction-delete'),
@@ -32,5 +33,6 @@ urlpatterns = [
     path("", SignIn.as_view(), name="sign-in"),
     path("sign-up", SignUp.as_view(), name="sign-up"),
 
+    path("home", HomeView.as_view(), name="home"),
     path("dashboard", PersonalBudgetListView.as_view(), name="dashboard"),
 ] + budgets + goals + transactions + categories

@@ -50,6 +50,8 @@ MY_APPS = [
     "personalbudgets.apps.PersonalbudgetsConfig",
 ]
 
+LOGIN_URL = '/sign-in/'
+
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + MY_APPS
 
 MIDDLEWARE = [

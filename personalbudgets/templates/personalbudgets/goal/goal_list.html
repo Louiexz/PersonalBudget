@@ -9,6 +9,8 @@
 {% endblock %}
 
 {% block container %}
+    <h2>Goals</h2>
+    <p>"Setting clear goals is the key to turning your aspirations into achievements."</p>
     <h3>New goal</h3>
     <form method="post" action="{% url 'goal-create'%}">
         {% csrf_token %}
@@ -24,7 +26,7 @@
                 <option value>--Select a goal--</option>
                 {% for goal in goals %}
                     <option value="{{ goal.id }}">
-                        {{ goal.goal }}
+                        {{ goal.title }}
                     </option>
                 {% endfor %}
             </select>
@@ -38,6 +40,8 @@
         <div class="goal">
             <div class="itens">
                 <p><strong>Title:</strong> {{ selected_goal.title }}</p>
+                <p><strong>Total amount :</strong> {{ selected_goal.total_amount }}</p>
+                <p><strong>Peding amount:</strong> {{ selected_goal.pending_amount }}</p>
                 <p><strong>Notes:</strong> {{ selected_goal.notes }}</p>
                 <p><strong>Created at:</strong> {{ selected_goal.created_at }}</p>
                 <p><strong>Last update:</strong> {{ selected_goal.updated_at }}</p>
@@ -49,12 +53,14 @@
                     {% csrf_token %}
                     <button type="submit" class="btn btn-secondary">Update goal</button>
                 </form>
-                {% if selected_goal.status != "Completed" or "Not Completed" %}
+                {% if selected_goal.status != "Completed" and "Not Completed" %}
                     <form method="get"
-                        action="{% url 'goal-paid' selected_goal.id %}">
+                        action="{% url 'goal-add' selected_goal.id %}">
                         {% csrf_token %}
+                        <label for="amount">Amount to add</label>
+                        <input type="number" name="amount" id="amount">
                         <input type="hidden" name="goal" id="goal" value="{{ selected_goal.id }}">
-                        <button type="submit" class="btn btn-danger">Paid goal?</button>
+                        <button type="submit" class="btn btn-danger">Add amount</button>
                     </form>
                 {% endif %}
                 <form method=get
@@ -67,6 +73,13 @@
         </div>
     {% elif goals %}
         <p>Select a goal to view details.</p>
+    {% endif %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
     {% endif %}
     
 {% endblock %}
