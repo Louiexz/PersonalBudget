@@ -8,13 +8,13 @@
     <h3>Create Transaction</h3>
     <form method="post">
         {% csrf_token %}
-        {% if transaction %}
+        {% if budget %}
             <p>
-                <strong>Selected Budget:</strong> {{transaction.budget}}
-                <strong>Remaining:</strong> {{transaction.remaining_amount}}
+                <strong>Selected Budget:</strong> {{budget.budget}}
+                <strong>Remaining:</strong> {{budget.remaining_amount}}
             </p>
             <input type="hidden" id="id_budget_id" name="budget_id"
-                value="{{ transaction.id }}">
+                value="{{ budget.id }}">
         {% endif %}
         {{ form|crispy }}
         {% if messages %}

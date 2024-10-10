@@ -28,11 +28,10 @@
 
 {% block container %}
     <h2>Goals</h2>
-    <p>"Setting clear goals is the key to turning your aspirations into achievements."</p>
-    <h3>New goal</h3>
+    <h5>"Setting clear goals is the key to turning your aspirations into achievements."</h5>
     <form method="post" action="{% url 'goal-create'%}">
+        <h3>New goal <button type="submit" class="btn btn-primary">Create</button></h3>
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Create</button>
     </form>
 
     {% if goals %}
@@ -51,7 +50,7 @@
             <button type="submit" class="btn btn-primary">View goal</button>
         </form>
     {% else %}
-        <p>No goal data available.</p>
+        <h5>No goals data available.</h5>
     {% endif %}
     {% if selected_goal %}
         <h3>Selected goal Details</h3>
@@ -90,7 +89,7 @@
             </div>
         </div>
     {% elif goals %}
-        <p>Select a goal to view details.</p>
+        <h5>Select a goal to view details.</h5>
     {% endif %}
     {% if messages %}
         <ul class="messages">

@@ -23,7 +23,6 @@ categories = [
 ]
 transactions = [
     path('transactions', TransactionList.as_view(), name='transaction-list'),
-    path('transactions/category/', TransactionList.as_view(), name='transaction-category'),
     path('transactions/create', TransactionCreate.as_view(), name='transaction-create'),
     path('transactions/update/<uuid:pk>', TransactionUpdate.as_view(), name='transaction-update'),
     path('transactions/delete/<uuid:pk>', TransactionDelete.as_view(), name='transaction-delete'),

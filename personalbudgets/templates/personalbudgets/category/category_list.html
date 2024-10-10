@@ -27,10 +27,11 @@
 {% endblock %}
 
 {% block container %}
-    <h3>New Category</h3>
+    <h2>Categories</h2>
+    <h5>You transactions may have a category!</h5>
     <form method="post" action="{% url 'category-create'%}">
+        <h3>New Category <button type="submit" class="btn btn-primary">Create</button></h3>
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Create</button>
     </form>
 
     {% if categories %}
@@ -80,7 +81,7 @@
             </div>
         </div>
     {% elif categories %}
-        <p>Select a category to view details.</p>
+        <h5>Select a category to view details.</h5>
     {% endif %}
     
 {% endblock %}
