@@ -28,11 +28,10 @@
 
 {% block container %}
     <h2>Budgets</h2>
-    <p>"A well-planned budget is the first step in turning dreams into reality."</p>
-    <h3>New Budget</h3>
+    <h5>"A well-planned budget is the first step in turning dreams into reality."</h5>
     <form method="post" action="{% url 'budget-create'%}">
+        <h3>New Budget <button type="submit" class="btn btn-primary">Create</button></h3>
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Create</button>
     </form>
 
     {% if budgets %}
@@ -87,7 +86,7 @@
             </div>
         </div>
     {% elif budgets %}
-        <p>Select a budget to view details.</p>
+        <h5>Select a budget to view details.</h5>
     {% endif %}
     
 {% endblock %}

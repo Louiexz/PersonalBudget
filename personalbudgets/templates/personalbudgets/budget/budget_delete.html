@@ -13,6 +13,7 @@
                 <div class="navbar-nav">
                     <a class="nav-link disabled" aria-disabled="true">Dashboard</a>
                     <a class="nav-link disabled" aria-disabled="true">Goals</a>
+                    <a class="nav-link disabled" aria-disabled="true">Categories</a>
                     <a class="nav-link disabled" aria-disabled="true">Budgets</a>
                     <a class="nav-link disabled" aria-disabled="true">Transactions</a>
                     <a class="nav-link disabled" aria-disabled="true">Reports</a>
@@ -25,8 +26,8 @@
 {% block container %}
     <h1>Delete Confirm</h1>
     {%if selected_budget %}
-        <p>Are you sure you want to delete "{{ selected_budget.budget }}"?</p>
-        <p><strong>All related transactions will be deleted!</strong></p>
+        <h4>Are you sure you want to delete "{{ selected_budget.budget }}"?</h4>
+        <h5><strong>All related transactions will be deleted!</strong></h5>
     {% endif %}
     <form method=post>
         {% csrf_token %}

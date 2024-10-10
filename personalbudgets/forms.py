@@ -38,17 +38,16 @@ class TransactionForm(forms.ModelForm):
         model = Transaction
         fields = [
             "budget", "category", "item", "price",
-            "remaining_installment", "validity", "notes",
+            "remaining_installment", "validity", "notes"
         ]
         widgets = {
             'validity': forms.DateInput(attrs={'type': 'date'}),
-            'date': forms.DateInput(attrs={'type': 'date'}),
         }
      
     def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user')  # Pega o usuário do kwargs
+        user = kwargs.pop('user')  # Get the user from kwargs
         super().__init__(*args, **kwargs)
         
-        # Filtra os budgets associados ao usuário logado
+        # Filter the budgets and categories associated with the logged-in user
         self.fields['budget'].queryset = PersonalBudget.objects.filter(user=user)
         self.fields['category'].queryset = Category.objects.filter(user=user)
