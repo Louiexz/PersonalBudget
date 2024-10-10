@@ -47,33 +47,33 @@ Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
 
 ## Estrutura do Projeto
 
-myproject/
-│
-├── run.py
-├── myproject/          # Diretório do projeto
-│   ├── __init__.py
-│   ├── settings.py     # Configurações do projeto
-│   ├── urls.py         # Mapeamento de URLs
-│   ├── asgi.py         # Configuração para ASGI
-│   └── wsgi.py         # Configuração para WSGI
-│
-├── personalbudgets/   # Um aplicativo Django
-│   ├── migrations/     # Arquivos de migração de banco de dados
-│   ├── model/          # Diretório dos modelos de dados
-│   ├── static/         # Diretório de arquivos estaticos (css, js, img)
-│   ├── templates/      # Diretório dos templates html
-│   ├── views/          # Diretório das lógicas de visualizações
-│   ├── __init__.py
-│   ├── admin.py        # Configurações do admin
-│   ├── apps.py         # Configurações do aplicativo
-│   ├── tests.py        # Testes do aplicativo
-│   └── urls.py         # URLs específicas do aplicativo
-│
-├── manage.py           # Script de gerenciamento do projeto
-│
-├── requirements.txt    # Dependências do projeto
-│
-└── db.sqlite3          # Banco de dados SQLite (Criado com o migrate)
+    myproject/
+    │
+    ├── run.py
+    ├── myproject/          # Diretório do projeto
+    │   ├── __init__.py
+    │   ├── settings.py     # Configurações do projeto
+    │   ├── urls.py         # Mapeamento de URLs
+    │   ├── asgi.py         # Configuração para ASGI
+    │   └── wsgi.py         # Configuração para WSGI
+    │
+    ├── personalbudgets/   # Um aplicativo Django
+    │   ├── migrations/     # Arquivos de migração de banco de dados
+    │   ├── model/          # Diretório dos modelos de dados
+    │   ├── static/         # Diretório de arquivos estaticos (css, js, img)
+    │   ├── templates/      # Diretório dos templates html
+    │   ├── views/          # Diretório das lógicas de visualizações
+    │   ├── __init__.py
+    │   ├── admin.py        # Configurações do admin
+    │   ├── apps.py         # Configurações do aplicativo
+    │   ├── tests.py        # Testes do aplicativo
+    │   └── urls.py         # URLs específicas do aplicativo
+    │
+    ├── manage.py           # Script de gerenciamento do projeto
+    │
+    ├── requirements.txt    # Dependências do projeto
+    │
+    └── db.sqlite3          # Banco de dados SQLite (Criado com o migrate)
 
 ## Contribuições
 
