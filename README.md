@@ -77,10 +77,10 @@ Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
 
 ## Contribuições
 
-Artur Ramos - 
-Carlos Eduardo - carlos-1ima
-Luiz Augusto - Louiexz
-Paulo Arthur -
-Vinicius José - ViniciusRKX
+Artur Ramos<br>
+Carlos Eduardo - carlos-1ima<br>
+Luiz Augusto - Louiexz<br>
+Paulo Arthur -<br>
+Vinicius José - ViniciusRKX<br>
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
