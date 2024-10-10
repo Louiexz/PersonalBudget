@@ -1,9 +1,6 @@
 # PersonalBudget
 Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
 
-# PersonalBudget
-Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
-
 ## Funcionalidades e/ou (Páginas)
 
     Users: Permite que novos usuários criem uma conta.
@@ -13,14 +10,11 @@ Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
     Transactions: Permitir que os usuários registrem, organizem e analisem suas transações financeiras.
     Dashboard: Fornecer uma visão consolidada e interativa das finanças do usuário, permitindo que ele monitore seus orçamentos, metas, categorias de transações e transações de forma rápida e eficiente.
 
-
 ## Pré-requisitos
 
 ### Certifique-se de ter o seguinte instalado antes de começar:
   
      Python 3
-     Flask
-     Flask-SocketIO
 
 ## Instalação e Uso
 
@@ -33,7 +27,7 @@ Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
  
  - Para funcionar:
 
-        Crie e ativa um ambiente virtual (venv): https://docs.python.org/pt-br/3/library/venv.html
+        Crie e ative um ambiente virtual (venv): https://docs.python.org/pt-br/3/library/venv.html
 
  - Instale as dependências:
 
@@ -82,6 +76,11 @@ myproject/
 └── db.sqlite3          # Banco de dados SQLite (Criado com o migrate)
 
 ## Contribuições
-Louiexz - Autor e Desenvolvedor do site<br>
+
+Artur Ramos - 
+Carlos Eduardo - carlos-1ima
+Luiz Augusto - Louiexz
+Paulo Arthur -
+Vinicius José - ViniciusRKX
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
