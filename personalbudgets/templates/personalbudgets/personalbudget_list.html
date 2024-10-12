@@ -4,21 +4,45 @@
 
 {% block title  %}Home{% endblock %}
 
+{% block links %}
+    <style type="text/css">
+        .sides {
+            display: grid;
+            place-items: center;
+            gap: 7vw;
+        }
+        @media (max-width: 4000px) {
+            .sides {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }      
+        
+        @media (max-width: 700px) {
+            .sides {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+{% endblock %}
+
 {% block container %}
-    <div>
-        <h3>Budget Summary</h3>
-        <br>
-        <p><strong>Total Budgets Quantity:</strong> {{ budgets.total_budgets }}</p>
-        <p><strong>Total Budgets Amount:</strong> ${{ budgets.total_amount }}</p>
-        <p><strong>Total Spents:</strong> ${{ budgets.total_spent }}</p>
-        <p><strong>Total Remaining:</strong> ${{ budgets.total_remaining }}</p>
-    </div>
-    <div>
-        <h3>Goals Summary</h3>
-        <br>
-        <p><strong>Total Goals Quantity:</strong> {{ goals.total_goals }}</p>
-        <p><strong>Total Goals Amount:</strong> ${{ goals.total_amount }}</p>
-        <p><strong>Total Pending:</strong> ${{ goals.pending_amount }}</p>
-        <p><strong>Total Remaining:</strong> ${{ goals.total_remaining }}</p>
+    <h2>Dashboard</h2>
+    <div class=sides>
+        <div>
+            <h3>Budget Summary</h3>
+            <br>
+            <p><strong>Total Budgets Quantity:</strong> {{ budgets.total_budgets }}</p>
+            <p><strong>Total Budgets Amount:</strong> ${{ budgets.total_amount }}</p>
+            <p><strong>Total Spents:</strong> ${{ budgets.total_spent }}</p>
+            <p><strong>Total Remaining:</strong> ${{ budgets.total_remaining }}</p>
+        </div>
+        <div>
+            <h3>Goals Summary</h3>
+            <br>
+            <p><strong>Total Goals Quantity:</strong> {{ goals.total_goals }}</p>
+            <p><strong>Total Goals Amount:</strong> ${{ goals.total_amount }}</p>
+            <p><strong>Total Pending:</strong> ${{ goals.pending_amount }}</p>
+            <p><strong>Total Remaining:</strong> ${{ goals.total_remaining }}</p>
+        </div>
     </div>
 {% endblock %}

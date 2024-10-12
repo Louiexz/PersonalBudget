@@ -5,25 +5,7 @@
 {% block title %} Budgets {% endblock %}
 
 {% block links %}
-    <style type="text/css">
-        .itens {
-            display: grid;
-            grid-template-columns: repeat(4, 300px);
-        }
-        
-        @media (max-width: 700px) {
-            .itens {
-                grid-template-columns: repeat(2, 1fr); /* Usar 1fr para flexibilidade */
-                column-gap: 10px;
-            }
-        }
-        
-        @media (min-width: 4000px) {
-            .itens {
-                grid-template-columns: repeat(4, 300px); /* Mantém o mesmo comportamento */
-            }
-        }        
-    </style>
+    <link rel="stylesheet" href={% static 'personalbudgets/css/lista.css' %}>
 {% endblock %}
 
 {% block container %}
@@ -38,16 +20,20 @@
         <h3>Choose a Budget</h3>
         <form method="get" action="{% url 'budget-list' %}">
             {% csrf_token %}
-            <label for="budget">Select Budget:</label>
-            <select name="budget" id="budget">
-                <option value>--Select a Budget--</option>
-                {% for budget in budgets %}
-                    <option value="{{ budget.id }}">
-                        {{ budget.budget }}
-                    </option>
-                {% endfor %}
-            </select>
-            <button type="submit" class="btn btn-primary">View Budget</button>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text"  for="budget">Select Budget:</label>
+                </div>
+                <select name="budget" id="budget">
+                    <option value>--Select a Budget--</option>
+                    {% for budget in budgets %}
+                        <option value="{{ budget.id }}">
+                            {{ budget.budget }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">View Budget</button>
+            </div>
         </form>
     {% else %}
         <p>No budget data available.</p>
@@ -57,8 +43,8 @@
         <div class="budget">
             <div class="itens">
                 <p><strong>Budget:</strong> {{ selected_budget.budget }}</p>
-                <p><strong>Total Budget:</strong> {{selected_budget.total_amount }}</p>
-                <p><strong>Remaining Budget:</strong> {{selected_budget.remaining_amount }}</p>
+                <p><strong>Total amount:</strong> {{selected_budget.total_amount }}</p>
+                <p><strong>Remaining amount:</strong> {{selected_budget.remaining_amount }}</p>
                 <p><strong>Notes:</strong> {{ selected_budget.notes }}</p>
                 <p><strong>Created at:</strong> {{ selected_budget.created_at }}</p>
                 <p><strong>Last update:</strong> {{ selected_budget.updated_at }}</p>

@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: simple-finance
+    env: python
+    buildCommand: 
+      - pip install -r requirements.txt
+      - python manage.py collectstatic --noinput
+      - python manage.py migrate
+    startCommand: gunicorn api.wsgi:application
+    envVars:
+      - key: DEBUG
+        value: false
+      - key: SECRET_KEY
+        sync: false  # Vai pegar do ambiente no painel Render
+      - key: DATABASE_URL
+        sync: false
+    autoDeploy: true

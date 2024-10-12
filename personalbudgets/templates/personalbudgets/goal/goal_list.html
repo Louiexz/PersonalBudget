@@ -5,24 +5,21 @@
 {% block title %} Goals {% endblock %}
 
 {% block links %}
-    <style type="text/css">
-        .itens {
-            display: grid;
-            grid-template-columns: repeat(4, 300px);
-        }
-        
+    <link rel="stylesheet" href={% static 'personalbudgets/css/lista.css' %}>
+    <style type="text/css"> 
         @media (max-width: 700px) {
             .itens {
-                grid-template-columns: repeat(2, 1fr); /* Usar 1fr para flexibilidade */
+                grid-template-columns: repeat(2, 1fr);
                 column-gap: 10px;
             }
-        }
-        
-        @media (min-width: 4000px) {
-            .itens {
-                grid-template-columns: repeat(4, 300px); /* Mantém o mesmo comportamento */
+            .amounts {
+                flex-direction: column;
+
+                #amount {
+                    min-width: 100%
+                }
             }
-        }        
+        }
     </style>
 {% endblock %}
 
@@ -30,7 +27,7 @@
     <h2>Goals</h2>
     <h5>"Setting clear goals is the key to turning your aspirations into achievements."</h5>
     <form method="post" action="{% url 'goal-create'%}">
-        <h3>New goal <button type="submit" class="btn btn-primary">Create</button></h3>
+        <h3>New Goal <button type="submit" class="btn btn-primary">Create</button></h3>
         {% csrf_token %}
     </form>
 
@@ -38,16 +35,18 @@
         <h3>Choose a goal</h3>
         <form method="get" action="{% url 'goal-list' %}">
             {% csrf_token %}
-            <label for="goal">Select goal:</label>
-            <select name="goal" id="goal">
-                <option value>--Select a goal--</option>
-                {% for goal in goals %}
-                    <option value="{{ goal.id }}">
-                        {{ goal.title }}
-                    </option>
-                {% endfor %}
-            </select>
-            <button type="submit" class="btn btn-primary">View goal</button>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="goal">Select goal:</label>
+                </div>
+                <select class="custom-select" name="goal" id="goal">
+                    <option selected>--Select a goal--</option>
+                    {% for goal in goals %}
+                        <option value="{{ goal.id }}">{{ goal.title }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">View goal</button>
+            </div>
         </form>
     {% else %}
         <h5>No goals data available.</h5>
@@ -72,12 +71,16 @@
                 </form>
                 {% if selected_goal.status != "Completed" and "Not Completed" %}
                     <form method="get"
-                        action="{% url 'goal-add' selected_goal.id %}">
+                        action="{% url 'goal-add' selected_goal.id %}" align=center>
                         {% csrf_token %}
-                        <label for="amount">Amount to add</label>
-                        <input type="number" name="amount" id="amount">
+                        <div class="input-group input-group-sm mb-3 amounts">
+                            <div class="input-group-prepend">
+                              <label class="input-group-text" id="inputGroup-sizing-sm" for="amount">Amount to add</label>
+                            </div>
+                            <input class="form-control" type="number" min=1 max=100000 name="amount" id="amount">
+                            <button type="submit" class="btn btn-danger">Add amount</button>
+                        </div>
                         <input type="hidden" name="goal" id="goal" value="{{ selected_goal.id }}">
-                        <button type="submit" class="btn btn-danger">Add amount</button>
                     </form>
                 {% endif %}
                 <form method=get
@@ -91,12 +94,4 @@
     {% elif goals %}
         <h5>Select a goal to view details.</h5>
     {% endif %}
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    
 {% endblock %}

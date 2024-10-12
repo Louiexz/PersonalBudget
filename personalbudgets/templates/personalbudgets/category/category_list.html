@@ -5,25 +5,7 @@
 {% block title %} Categories {% endblock %}
 
 {% block links %}
-    <style type="text/css">
-        .itens {
-            display: grid;
-            grid-template-columns: repeat(4, 300px);
-        }
-        
-        @media (max-width: 700px) {
-            .itens {
-                grid-template-columns: repeat(2, 1fr); /* Usar 1fr para flexibilidade */
-                column-gap: 10px;
-            }
-        }
-        
-        @media (min-width: 4000px) {
-            .itens {
-                grid-template-columns: repeat(4, 300px); /* Mantém o mesmo comportamento */
-            }
-        }        
-    </style>
+    <link rel="stylesheet" href={% static 'personalbudgets/css/lista.css' %}>
 {% endblock %}
 
 {% block container %}
@@ -38,16 +20,20 @@
         <h3>Choose a category</h3>
         <form method="get" action="{% url 'category-list' %}">
             {% csrf_token %}
-            <label for="category">Select category:</label>
-            <select name="category" id="category">
-                <option value>--Select a category--</option>
-                {% for category in categories %}
-                    <option value="{{ category.id }}">
-                        {{ category.category }}
-                    </option>
-                {% endfor %}
-            </select>
-            <button type="submit" class="btn btn-primary">View category</button>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="category">Select category:</label>
+                </div>
+                <select name="category" id="category">
+                    <option value>--Select a category--</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">
+                            {{ category.category }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">View category</button>
+            </div>
         </form>
     {% else %}
         <p>No category data available.</p>

@@ -17,13 +17,6 @@
                 value="{{ budget.id }}">
         {% endif %}
         {{ form|crispy }}
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
         <div class="buttons">
             <button type="submit" class="btn btn-success">Save</button>
             <a href="{% url 'transaction-list' %}" class="btn btn-secondary">Cancel</a>
