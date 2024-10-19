@@ -28,15 +28,15 @@
 {% endblock %}
 
 {% block container %}
-    <form method="post">
+    <form class="form text-center" method="post">
         <h3 align=center>Login</h3>
         {% csrf_token %}
-        <div class="input-group mb-3">
+        <div class="input-group mt-3 mb-2">
             <span class="input-group-text">Username:</span>
             <input type="text" class="form-control" id="username" name="username" placeholder="Username"
                 aria-label="Username" aria-describedby="basic-addon1">
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mt-3 mb-2">
             <span class="input-group-text">Password:</span>
             <input type="password" class="form-control" id="password" name="password" placeholder="Password"
                 aria-label="Password" aria-describedby="basic-addon1">
@@ -47,3 +47,4 @@
         </div>
     </form>
 {% endblock %}
+{% block footer %}{% endblock %}

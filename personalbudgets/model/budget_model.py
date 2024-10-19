@@ -19,6 +19,8 @@ class PersonalBudget(models.Model):
     def clean(self):
         if self.validity is None: return
         if self.validity < dates.today():
+            raise ValidationError("Validity cannot be in the past.")
+        if self.validity < dates.today():
             self.status = "Expired"
         else:
             self.status = "Not Expired"

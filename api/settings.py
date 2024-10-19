@@ -10,11 +10,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = '/static/personalbudgets/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = config('SECRET_KEY')
 
-DEBUG = config("Debug", cast=bool, default=False)
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default='localhost', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost', cast=Csv())
 
 # Application definition
 DJANGO_APPS = [

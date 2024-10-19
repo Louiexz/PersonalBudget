@@ -27,22 +27,43 @@
 
 {% block container %}
     <h2>Dashboard</h2>
-    <div class=sides>
-        <div>
-            <h3>Budget Summary</h3>
-            <br>
-            <p><strong>Total Budgets Quantity:</strong> {{ budgets.total_budgets }}</p>
-            <p><strong>Total Budgets Amount:</strong> ${{ budgets.total_amount }}</p>
-            <p><strong>Total Spents:</strong> ${{ budgets.total_spent }}</p>
-            <p><strong>Total Remaining:</strong> ${{ budgets.total_remaining }}</p>
-        </div>
-        <div>
-            <h3>Goals Summary</h3>
-            <br>
-            <p><strong>Total Goals Quantity:</strong> {{ goals.total_goals }}</p>
-            <p><strong>Total Goals Amount:</strong> ${{ goals.total_amount }}</p>
-            <p><strong>Total Pending:</strong> ${{ goals.pending_amount }}</p>
-            <p><strong>Total Remaining:</strong> ${{ goals.total_remaining }}</p>
-        </div>
-    </div>
+    <h3>Budget Summary</h3>
+    <table class=" container table">
+        <thead>
+            <tr>
+                <th>Total Budgets Quantity</th>
+                <th>Total Budgets Amount</th>
+                <th>Total Spents</th>
+                <th>Total Remaining</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ budgets.total_budgets }}</td>
+                <td>{{ budgets.total_amount }}</td>
+                <td>{{ budgets.total_spent }}</td>
+                <td>{{ budgets.total_remaining }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Goals Summary</h3>
+    <table class="container table">
+        <thead>
+            <tr>
+                <th>Total Goals Quantity</th>
+                <th>Total Goals Amount</th>
+                <th>Total Pending</th>
+                <th>Total Remaining</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ goals.total_goals }}</td>
+                <td>{{ goals.total_amount }}</td>
+                <td>{{ goals.pending_amount }}</td>
+                <td>{{ goals.total_remaining }}</td>
+            </tr>
+        </tbody>
+    </table>
 {% endblock %}

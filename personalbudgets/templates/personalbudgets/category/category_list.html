@@ -4,10 +4,6 @@
 
 {% block title %} Categories {% endblock %}
 
-{% block links %}
-    <link rel="stylesheet" href={% static 'personalbudgets/css/lista.css' %}>
-{% endblock %}
-
 {% block container %}
     <h2>Categories</h2>
     <h5>You transactions may have a category!</h5>
@@ -40,32 +36,42 @@
     {% endif %}
     {% if selected_category %}
         <h3>Selected category Details</h3>
-        <div class="category">
-            <div class="itens">
-                <p><strong>Category:</strong> {{ selected_category.category }}</p>
-                <p><strong>Notes:</strong> {{ selected_category.notes }}</p>
-                <p><strong>Created at:</strong> {{ selected_category.created_at }}</p>
-                <p><strong>Last update:</strong> {{ selected_category.updated_at }}</p>
-            </div>
-            <div class="buttons">
-                <form method="get" action="{% url 'transaction-list' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="category" id="category" value="{{ selected_category.id }}">
-                    <button type="submit" class="btn btn-secondary">View Transactions</button>
-                </form>          
-                <form method=get action="{% url 'category-update' selected_category.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-secondary">Update category</button>
-                </form>
-
-                <form method=get
-                    action="{% url 'category-delete' selected_category.id %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="category" id="category" value="{{ selected_category.id }}">
-                    <button type="submit" class="btn btn-danger">Delete category</button>
-                </form>
-            </div>
-        </div>
+        <table class="container table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Category</th>
+                    <th>Notes</th>
+                    <th>Created at</th>
+                    <th>Last update</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selected_category.category|capfirst }}</td>
+                    <td>{{ selected_category.notes }}</td>
+                    <td>{{ selected_category.created_at|date:"d/m/Y" }}</td>
+                    <td>{{ selected_category.updated_at|date:"d/m/Y" }}</td>
+                </tr>
+            </tbody>
+        </tr>
+    </table>
+    <div class="buttons">                    
+        <form method="get" action="{% url 'transaction-list' %}">
+            {% csrf_token %}
+            <input type="hidden" name="category" id="category" value="{{ selected_category.id }}">
+            <button type="submit" class="btn btn-secondary">View Transactions</button>
+        </form>          
+        <form method=get action="{% url 'category-update' selected_category.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Update category</button>
+        </form>
+        <form method=get
+            action="{% url 'category-delete' selected_category.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="category" id="category" value="{{ selected_category.id }}">
+            <button type="submit" class="btn btn-danger">Delete category</button>
+        </form>
+    </div>
     {% elif categories %}
         <h5>Select a category to view details.</h5>
     {% endif %}

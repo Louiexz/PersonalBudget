@@ -5,7 +5,6 @@
 {% block title %} Goals {% endblock %}
 
 {% block links %}
-    <link rel="stylesheet" href={% static 'personalbudgets/css/lista.css' %}>
     <style type="text/css"> 
         @media (max-width: 700px) {
             .itens {
@@ -53,17 +52,42 @@
     {% endif %}
     {% if selected_goal %}
         <h3>Selected goal Details</h3>
+        <table class="container table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Title</th>
+                    <th>Total amount</th>
+                    <th>Peding amount</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selected_goal.title|capfirst }}</td>
+                    <td>{{ selected_goal.total_amount }}</td>
+                    <td>{{ selected_goal.pending_amount }}</td>
+                    <td>{{ selected_goal.notes }}</td>
+                </tr>
+            </tbody>
+            <thead class="thead-dark">
+                <tr>
+                    <th>Created at</th>
+                    <th>Last update</th>
+                    <th>Due date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selected_goal.created_at|date:"d/m/Y" }}</td>
+                    <td>{{ selected_goal.updated_at|date:"d/m/Y" }}</td>
+                    <td>{{ selected_goal.due_date|date:"d/m/Y" }}</td>
+                    <td>{{ selected_goal.status }}</td>
+                </tr>
+            </tbody>
+        </table>
+        
         <div class="goal">
-            <div class="itens">
-                <p><strong>Title:</strong> {{ selected_goal.title }}</p>
-                <p><strong>Total amount :</strong> {{ selected_goal.total_amount }}</p>
-                <p><strong>Peding amount:</strong> {{ selected_goal.pending_amount }}</p>
-                <p><strong>Notes:</strong> {{ selected_goal.notes }}</p>
-                <p><strong>Created at:</strong> {{ selected_goal.created_at }}</p>
-                <p><strong>Last update:</strong> {{ selected_goal.updated_at }}</p>
-                <p><strong>Due date:</strong> {{ selected_goal.due_date }}</p>
-                <p><strong>Status:</strong> {{ selected_goal.status }}</p>
-            </div>
             <div class="buttons">
                 <form method=get action="{% url 'goal-update' selected_goal.id %}">
                     {% csrf_token %}

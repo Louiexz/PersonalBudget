@@ -2,7 +2,6 @@ from .views import *
 
 from django.db.models import Sum
 from ..model import PersonalBudget, Goal
-
 class PersonalBudgetListView(LoginRequiredMixin, ListView):
     model = PersonalBudget
     login_url = 'sign-in'  # Define a URL de login
@@ -13,7 +12,7 @@ class PersonalBudgetListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
+
         # Usuário logado
         username = self.request.user
 

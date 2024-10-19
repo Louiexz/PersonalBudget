@@ -6,10 +6,6 @@
     {% if selected_budget %}{{ selected_budget.budget }}{% endif %} Transactions
 {% endblock %}
 
-{% block links %}
-    <link rel="stylesheet" href={% static 'personalbudgets/css/lista.css' %}>
-{% endblock %}
-
 {% block container %}
     <h2>Transactions</h2>
     <h5>"Every transaction is an opportunity for learning and financial growth."</h5>
@@ -25,63 +21,77 @@
 
     {% if selected_budget %}
         <h3>Selected Budget Details</h3>
-        <div class="itens">
-            <p><strong>Budget:</strong> {{ selected_budget.budget }}</p>
-            <p><strong>Total Budget:</strong> {{ selected_budget.total_amount }}</p>
-            <p><strong>Remaining Budget:</strong> {{ selected_budget.remaining_amount }}</p>
-            <p><strong>Status:</strong> {{ selected_budget.status }}</p>
-        </div>
+        <table class="container table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Budget:</th>
+                    <th>Total Budget</th>
+                    <th>Remaining Budget</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selected_budget.budget|capfirst }}</td>
+                    <td>{{ selected_budget.total_amount|floatformat:"2" }}</td>
+                    <td>{{ selected_budget.remaining_amount|floatformat:"2" }}</td>
+                    <td>{{ selected_budget.status }}</td>
+                </tr>
+            </tbody>
+        </table>
     {% elif selected_category %}
         <h3>Selected Category Details</h3>
-        <div class="category">
-            <div class="itens">
-                <p></p>
-                <p><strong>Category:</strong> {{ selected_category.category }}</p>
-                <p><strong>Notes:</strong> {{ selected_category.notes }}</p>
-            </div>
-        </div>
+        <table class="container table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Category:</th>
+                    <th>Notes:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selected_category.category }}</td>
+                    <td>{{ selected_category.notes }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Transactions Details</h3>
+    {% else %}
+        <h5>No Budget or Category Selected</h5>
+        <h3>All Transactions Details</h3>
     {% endif %}
 
-    <h3>Transactions Details</h3>
     {% if transactions %}
-        <div class="budget">
-            {% for transaction in transactions %}
-                <div class="itens">
-                    <p><strong>Category:</strong> {{ transaction.category.category }}</p>
-                    <p><strong>Item:</strong> {{ transaction.item }}</p>
-                    <p><strong>Price:</strong> {{ transaction.price }}</p>
-                    <p><strong>Notes:</strong> {{ transaction.notes }}</p>
-                    <p><strong>Created at:</strong> {{ transaction.created_at }}</p>
-                    <p><strong>Last update:</strong> {{ transaction.updated_at }}</p>
-                    <p><strong>Status:</strong> {{ transaction.status }}</p>
-                    <p><strong>Validity:</strong> {{ transaction.validity }}</p>
-                    <p><strong>Remaining Installment:</strong> {{ transaction.remaining_installment }}</p>
-                </div>
-                <div class="buttons">
-                    <form method="get"
-                        action="{% url 'transaction-update' transaction.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-secondary">Update transaction</button>
-                    </form>
-
-                    {% if transaction.remaining_installment > 0 and transaction.status != "Paid" %}
-                        <form method="get"
-                            action="{% url 'transaction-paid' transaction.id %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="item" id="item" value="{{ transaction.id }}">
-                            <button type="submit" class="btn btn-danger">Paid transaction?</button>
-                        </form>
-                    {% endif %}
-
-                    <form method="get"
-                        action="{% url 'transaction-delete' transaction.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Delete transaction</button>
-                    </form>
-                </div>
-                <br>
-            {% endfor %}
-        </div>
+        <table class="container table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Created at</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.item|capfirst }}</td>
+                        <td>{{ transaction.price|floatformat:"2" }}</td>
+                        <td>{{ transaction.validity|date:"d/m/Y" }}</td>
+                        <td>{{ transaction.status }}</td>
+                        <td>
+                            <form method="get"
+                                action="{% url 'transaction-view' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="transaction" id="transaction" value="{{ transaction.id }}">
+                                <button type="submit" class="btn btn-secondary">View transaction</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
         <h5>No budget or category itens data available.</h5>
     {% endif %}

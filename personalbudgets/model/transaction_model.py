@@ -26,6 +26,9 @@ class Transaction(models.Model):
     def clean(self):
         if self.validity and self.created_at and self.updated_at is None:
             return
+        if self.budget.remaining_amount < self.price:
+            raise ValidationError(
+                "Transaction price exceeds remaining budget.")
         if self.validity < dates.today():
             raise ValidationError("Validity date cannot be in the past.")
         if self.price < 0:
@@ -33,23 +36,27 @@ class Transaction(models.Model):
         if self.remaining_installment < 0:
             raise ValidationError("Remaining installments must be positive.")
 
-    def valide(self):
-        if self.status == "To Pay":
+    def update_status(self):
+        if self.remaining_installment == 0:
             self.status = "Paid"
-            if self.remaining_installment > 0:
-                self.validity += relativedelta(months=1)
-                self.remaining_installment -= 1
         else:
+            self.status = "To pay"
+    
+    def paid(self):
+        if self.remaining_installment > 0:
+            self.validity += relativedelta(months=1)
+            self.remaining_installment -= 1
             self.status = "Paid"
+            self.superSave()
 
-    def save(self, *args, **kwargs):
-        if self.budget.remaining_amount < self.price:
-            raise ValidationError(
-                "Transaction price exceeds remaining budget.")
+    def superSave(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+    def save(self):
         if self.budget.status != "Expired":
             self.clean()
-            self.valide()
-            super().save(*args, **kwargs)
+            self.update_status()
+            self.superSave()
             self.budget.save()
         else:
             raise ValidationError("Expired budget.")

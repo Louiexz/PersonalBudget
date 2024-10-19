@@ -4,10 +4,6 @@
 
 {% block title %} Budgets {% endblock %}
 
-{% block links %}
-    <link rel="stylesheet" href={% static 'personalbudgets/css/lista.css' %}>
-{% endblock %}
-
 {% block container %}
     <h2>Budgets</h2>
     <h5>"A well-planned budget is the first step in turning dreams into reality."</h5>
@@ -18,11 +14,11 @@
 
     {% if budgets %}
         <h3>Choose a Budget</h3>
-        <form method="get" action="{% url 'budget-list' %}">
+        <form class="form" method="get" action="{% url 'budget-list' %}">
             {% csrf_token %}
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  <label class="input-group-text"  for="budget">Select Budget:</label>
+                <label class="input-group-text"  for="budget">Select Budget:</label>
                 </div>
                 <select name="budget" id="budget">
                     <option value>--Select a Budget--</option>
@@ -36,43 +32,65 @@
             </div>
         </form>
     {% else %}
-        <p>No budget data available.</p>
+        <div class="text-center mt-5 mb-5 jumbotron">
+            <h5>No budget data available.</h5>
+        </div>
     {% endif %}
     {% if selected_budget %}
         <h3>Selected Budget Details</h3>
-        <div class="budget">
-            <div class="itens">
-                <p><strong>Budget:</strong> {{ selected_budget.budget }}</p>
-                <p><strong>Total amount:</strong> {{selected_budget.total_amount }}</p>
-                <p><strong>Remaining amount:</strong> {{selected_budget.remaining_amount }}</p>
-                <p><strong>Notes:</strong> {{ selected_budget.notes }}</p>
-                <p><strong>Created at:</strong> {{ selected_budget.created_at }}</p>
-                <p><strong>Last update:</strong> {{ selected_budget.updated_at }}</p>
-                <p><strong>Validity:</strong> {{ selected_budget.validity }}</p>
-                <p><strong>Status:</strong> {{ selected_budget.status }}</p>
-            </div>
-            <div class="buttons">
-                <form method="get" action="{% url 'transaction-list' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="budget" id="budget" value="{{ selected_budget.id }}">
-                    <button type="submit" class="btn btn-secondary">View Transactions</button>
-                </form>
-                
-                <form method=get action="{% url 'budget-update' selected_budget.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-secondary">Update Budget</button>
-                </form>
-
-                <form method=get
-                    action="{% url 'budget-delete' selected_budget.id %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="budget" id="budget" value="{{ selected_budget.id }}">
-                    <button type="submit" class="btn btn-danger">Delete Budget</button>
-                </form>
-            </div>
+        <table class="container table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Budget</th>
+                    <th>Total amount</th>
+                    <th>Remaining amount</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selected_budget.budget|capfirst }}</td>
+                    <td>{{selected_budget.total_amount|floatformat:"2" }}</td>
+                    <td>{{selected_budget.remaining_amount|floatformat:"2" }}</td>
+                    <td>{{ selected_budget.notes }}</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th>Created at</th>
+                    <th>Last update</th>
+                    <th>Validity</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selected_budget.created_at|date:"d/m/Y" }}</td>
+                    <td>{{ selected_budget.updated_at|date:"d/m/Y" }}</td>
+                    <td>{{ selected_budget.validity|date:"d/m/Y" }}</td>
+                    <td>{{ selected_budget.status }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <form method="get" action="{% url 'transaction-list' %}">
+                {% csrf_token %}
+                <input type="hidden" name="budget" id="budget" value="{{ selected_budget.id }}">
+                <button type="submit" class="btn btn-secondary">View Transactions</button>
+            </form>
+            <form method=get action="{% url 'budget-update' selected_budget.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Update Budget</button>
+            </form>
+            <form method=get
+                action="{% url 'budget-delete' selected_budget.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="budget" id="budget" value="{{ selected_budget.id }}">
+                <button type="submit" class="btn btn-danger">Delete Budget</button>
+            </form>
         </div>
     {% elif budgets %}
-        <h5>Select a budget to view details.</h5>
+        <h5 align="center">Select a budget to view details.</h5>
     {% endif %}
     
 {% endblock %}
