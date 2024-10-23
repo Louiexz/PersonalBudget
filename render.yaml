@@ -6,7 +6,7 @@ services:
       - pip install -r requirements.txt
       - python manage.py collectstatic --noinput
       - python manage.py migrate
-    startCommand: gunicorn api.wsgi:application
+    startCommand: gunicorn api.wsgi:app
     envVars:
       - key: DEBUG
         value: false
@@ -14,4 +14,6 @@ services:
         sync: false  # Vai pegar do ambiente no painel Render
       - key: DATABASE_URL
         sync: false
+      - key: ALLOWED_HOSTS
+        sync : false
     autoDeploy: true
