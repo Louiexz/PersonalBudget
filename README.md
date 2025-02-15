@@ -77,10 +77,10 @@ Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
 
 ## Contribuições
 
-Artur Ramos<br>
-Carlos Eduardo - carlos-1ima<br>
-Luiz Augusto - Louiexz<br>
-Paulo Arthur -<br>
-Vinicius José - ViniciusRKX<br>
+Artur Ramos - [@4rturr](https://github.com/4rturr)<br>
+Carlos Eduardo - [@carlos-1ima](https://github.com/carlos-1ima)<br>
+Luiz Augusto - [@Louiexz](https://github.com/Louiexz)<br>
+Paulo Arthur - [@pauludelimaa](https://github.com/pauludelimaa)<br>
+Vinicius José - [@ViniciusRKX](https://github.com/ViniciusRKX)
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
+Contribuições restritas! Analisaremos issues e pull requests.
