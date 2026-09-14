@@ -2,10 +2,24 @@
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
+    font-size: 1em;
 }
-.summary, .buttons {
+
+th, td, h5 {
+    text-align: center;
+}
+td {
+    max-width: 5rem;
+    white-space: nowrap;
+    overflow: auto;
+}
+.summary,
+.buttons {
     display: flex;
+    gap: 15px;
+    justify-content: space-evenly;
 }
+
 .summary {
     padding: 80px 10px;
     min-height: 99dvh;
@@ -14,8 +28,9 @@
     gap: 20px 0px;
     justify-content: space-evenly;
     align-items: center;
-    background-color: #f0ffff;
+    background-color: #eee;
 }
+
 .buttons {
     justify-content: space-around;
 }
@@ -24,5 +39,5 @@
     .navbar {
         position: fixed;
         width: 100%;
-    }   
+    }
 }

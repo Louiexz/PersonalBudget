@@ -78,12 +78,9 @@ class GoalAdd(LoginRequiredMixin, View):
         amount = self.request.GET.get("amount")
 
         if goal.status == "To Complete":
-            if decimal.Decimal(amount) > 0:
-                goal.pending_amount += decimal.Decimal(amount)
-                goal.save()
-                messages.success(request, "Goal amount increased.")
-            else:
-                messages.warning(request, "Invalid amount.")
+            goal.pending_amount += decimal.Decimal(amount)
+            goal.save()
+            messages.success(request, "Goal amount increased.")
         else:
             messages.warning(request, "Goal is already completed.")
 

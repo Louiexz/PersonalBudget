@@ -3,7 +3,6 @@ import subprocess
 import sys
 import os
 
-
 def run_command(command, env=None):
     """Executa um comando shell e retorna o status e a saída."""
     result = subprocess.run(
@@ -15,7 +14,7 @@ def main():
     BASE_DIR = Path(__file__).resolve().parent.parent
     # Caminho para o ambiente virtual e o comando Python a ser executado
     venv_path = os.path.join(BASE_DIR, '.venv')
-    command = "python3 manage.py runserver"
+    command = "python3 -X importtime manage.py runserver 2> /tmp/import.log"
 
     # Define o ambiente virtual
     env = os.environ.copy()

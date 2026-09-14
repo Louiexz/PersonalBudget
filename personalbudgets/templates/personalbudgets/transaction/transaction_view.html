@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+    {% if selected_transaction %}{{ selected_transaction.item }}{% endif %} Transaction
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href={% static 'personalbudgets/css/lista.css' %}>
+{% endblock %}
+
+{% block container %}
+    <h2>Transaction "{{ selected_transaction.item }}"</h2>
+    <h3>Transaction Details</h3>
+    {% if selected_transaction %}
+        <table class="container table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Budget</th>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selected_transaction.budget.budget|capfirst  }}</td>
+                    <td>{{ selected_transaction.category.category|capfirst  }}</td>
+                    <td>{{ selected_transaction.item|capfirst  }}</td>
+                    <td>{{ selected_transaction.price|floatformat:"2" }}</td>
+                    <td>{{ selected_transaction.notes }}</td>
+                </tr>
+            </tbody>
+            
+            <thead>
+                <tr>
+                    <th>Created at</th>
+                    <th>Last update</th>
+                    <th>Validity</th>
+                    <th>Remaining Installment</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ selected_transaction.created_at|date:"d/m/Y" }}</td>
+                    <td>{{ selected_transaction.updated_at|date:"d/m/Y" }}</td>
+                    <td>{{ selected_transaction.validity|date:"d/m/Y" }}</td>
+                    <td>{{ selected_transaction.remaining_installment }}</td>
+                    <td>{{ selected_transaction.status }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <form method="get"
+                action="{% url 'transaction-update' selected_transaction.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Update transaction</button>
+            </form>
+
+            {% if selected_transaction.remaining_installment > 0 and selected_transaction.status != "Paid" %}
+                <form method="get"
+                    action="{% url 'transaction-paid' selected_transaction.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item" id="item" value="{{ selected_transaction.id }}">
+                    <button type="submit" class="btn btn-danger">Paid transaction?</button>
+                </form>
+            {% endif %}
+
+            <form method="get"
+                action="{% url 'transaction-delete' selected_transaction.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete transaction</button>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

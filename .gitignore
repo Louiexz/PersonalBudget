@@ -2,9 +2,20 @@
 __pycache__/
 db.sqlite3
 /media
+.venv/
+static/
 *.log
 *.pot
 *.py[cod]
 *.egg-info/
 .venv/
+<<<<<<< Updated upstream
+.env
 .vscode/
+.vercel/
+=======
+.vscode/
+.env
+.tmp/
+*__init__.py
+>>>>>>> Stashed changes

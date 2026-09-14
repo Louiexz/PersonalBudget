@@ -31,13 +31,6 @@
         {% csrf_token %}
         {{ form|crispy }}
         {% csrf_token %}
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
         <button type="submit"
             class="btn btn-success">Save</button>
         <a href="{% url 'category-list' %}" class="btn btn-secondary">Cancel</a>

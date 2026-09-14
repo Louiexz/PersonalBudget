@@ -41,6 +41,25 @@ class TransactionList(LoginRequiredMixin, ListView):
         })
         return context
 
+class TransactionView(LoginRequiredMixin, ListView):
+    model = Transaction
+    template_name = "personalbudgets/transaction/transaction_view.html"
+
+    def get_queryset(self):
+        # Filtra os orçamentos do usuário logado
+        return Transaction.objects.filter(budget__user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        transaction_id = self.request.GET.get("transaction")
+        
+        if transaction_id:
+            context['selected_transaction'] = get_object_or_404(self.get_queryset(), id=transaction_id)
+        else:
+            context['selected_transaction'] = None  # Caso não haja transação selecionada
+
+        return context
 class TransactionCUD:
     model = Transaction
     form_class = TransactionForm
@@ -98,7 +117,7 @@ class TransactionPaid(LoginRequiredMixin, View):
     def get(self, request, pk):
         try:
             transaction = get_object_or_404(Transaction, pk=pk, budget__user=request.user)
-            transaction.save()
+            transaction.paid()
 
             return redirect("transaction-list")
         except Exception as e:

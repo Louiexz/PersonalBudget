@@ -29,20 +29,6 @@
     <form method="post" id="transaction_up">
         {% csrf_token %}
         {{ form|crispy }}
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li class="{{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
         <button type="submit" class="btn btn-success">Save</button>
         <a href="{% url 'transaction-list' %}" class="btn btn-secondary">Cancel</a>
     </form>
