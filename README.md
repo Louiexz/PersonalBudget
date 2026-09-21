@@ -15,6 +15,9 @@ Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
 ### Certifique-se de ter o seguinte instalado antes de começar:
   
      Python 3
+     Ollama
+     Modelo local ou em nuvem de sua preferência   
+     AnythingLLM Desktop
 
 ## Instalação e Uso
 

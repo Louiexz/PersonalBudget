@@ -8,7 +8,6 @@ class HomeView(LoginRequiredMixin, ListView):
     template_name = "personalbudgets/home.html"
     login_url = 'sign-in'  # Define a URL de login
 
-
     def get_queryset(self):
         # Filtra os orçamentos do usuário logado
         return

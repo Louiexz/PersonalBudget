@@ -8,7 +8,6 @@ static/
 *.pot
 *.py[cod]
 *.egg-info/
-.venv/
 <<<<<<< Updated upstream
 .env
 .vscode/
@@ -18,4 +17,3 @@ static/
 .env
 .tmp/
 *__init__.py
->>>>>>> Stashed changes

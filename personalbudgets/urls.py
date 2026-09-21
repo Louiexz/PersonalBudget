@@ -2,6 +2,9 @@ from django.urls import path
 
 from personalbudgets.view import *
 
+chat_ai = [
+    path('chat/', AiChat, name='ai-chat'),
+]
 budgets = [
     path('budget/', BudgetList.as_view(), name='budget-list'),
     path('budget/create/', BudgetCreate.as_view(), name='budget-create'),
@@ -35,4 +38,4 @@ urlpatterns = [
 
     path("home", HomeView.as_view(), name="home"),
     path("dashboard", PersonalBudgetListView.as_view(), name="dashboard"),
-] + budgets + goals + transactions + categories
+] + budgets + goals + transactions + categories + chat_ai

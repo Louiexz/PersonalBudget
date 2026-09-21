@@ -60,6 +60,7 @@ class TransactionView(LoginRequiredMixin, ListView):
             context['selected_transaction'] = None  # Caso não haja transação selecionada
 
         return context
+
 class TransactionCUD:
     model = Transaction
     form_class = TransactionForm

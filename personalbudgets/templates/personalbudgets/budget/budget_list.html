@@ -8,7 +8,12 @@
     <h2>Budgets</h2>
     <h5>"A well-planned budget is the first step in turning dreams into reality."</h5>
     <form method="post" action="{% url 'budget-create'%}">
-        <h3>New Budget <button type="submit" class="btn btn-primary">Create</button></h3>
+        <div class="feature-title">
+            <h3>New Budget</h3>
+            <button type="submit" class="btn btn-primary">
+                Create
+            </button>
+        </div>
         {% csrf_token %}
     </form>
 
@@ -18,7 +23,7 @@
             {% csrf_token %}
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                <label class="input-group-text"  for="budget">Select Budget:</label>
+                    <label class="input-group-text"  for="budget">Select Budget:</label>
                 </div>
                 <select name="budget" id="budget">
                     <option value>--Select a Budget--</option>

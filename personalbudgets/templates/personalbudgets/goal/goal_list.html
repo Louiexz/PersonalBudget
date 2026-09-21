@@ -26,7 +26,12 @@
     <h2>Goals</h2>
     <h5>"Setting clear goals is the key to turning your aspirations into achievements."</h5>
     <form method="post" action="{% url 'goal-create'%}">
-        <h3>New Goal <button type="submit" class="btn btn-primary">Create</button></h3>
+        <div class="feature-title">
+            <h3>New Goal</h3>
+            <button type="submit" class="btn btn-primary">
+                Create
+            </button>
+        </div>
         {% csrf_token %}
     </form>
 

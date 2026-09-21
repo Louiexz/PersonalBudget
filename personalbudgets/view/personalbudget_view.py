@@ -2,6 +2,7 @@ from .views import *
 
 from django.db.models import Sum
 from ..model import PersonalBudget, Goal
+
 class PersonalBudgetListView(LoginRequiredMixin, ListView):
     model = PersonalBudget
     login_url = 'sign-in'  # Define a URL de login

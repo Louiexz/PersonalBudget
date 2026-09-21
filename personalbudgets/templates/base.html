@@ -64,20 +64,20 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             {% block nav %}
-            <a class="navbar-brand" href="{% url 'home' %}">Financial Manager</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" href="{% url 'dashboard'%}">Dashboard</a>
-                    <a class="nav-link" href="{% url 'goal-list'%}">Goals</a>
-                    <a class="nav-link" href="{% url 'budget-list'%}">Budgets</a>
-                    <a class="nav-link" href="{% url 'category-list'%}">Categories</a>
-                    <a class="nav-link" href="{% url 'transaction-list'%}">Transactions</a>
+                <a class="navbar-brand" href="{% url 'home' %}">Financial Manager</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" href="{% url 'dashboard'%}">Dashboard</a>
+                        <a class="nav-link" href="{% url 'goal-list'%}">Goals</a>
+                        <a class="nav-link" href="{% url 'budget-list'%}">Budgets</a>
+                        <a class="nav-link" href="{% url 'category-list'%}">Categories</a>
+                        <a class="nav-link" href="{% url 'transaction-list'%}">Transactions</a>
+                    </div>
                 </div>
-            </div>
             {% endblock %}
             <button class="btn btn-secondary" id="toggle-mode">Toggle mode</button>
         </div>
@@ -86,11 +86,35 @@
         <section class="summary">
             {% block container %}
             {% endblock %}
+            {% block chat-popup %}
+                <div id="container-chat-popup">
+                    <div id="chat-popup">
+                        <div id="chat-area">
+                            <div id="chat-messages">
+                                <p class="ai-message" id="message-0">
+                                    <img src="{% static 'assets/images/btn-chat-popup-background.svg' %}"
+                                     alt="AI assistant avatar"
+                                     class="ai-picture">
+                                    <span>Hello, how can i help you today?</span>
+                                </p>
+                            </div>
+                        </div>
+                        <form id="form-chat-text">
+                            <input type="text" maxlength="200" class="input-group-text" id="input-chat-text" placeholder="Talk with Fina.AI">
+                            <button type="submit" class="btn btn-success">Send</button>
+                        </form>
+                    </div>
+                    <div id=show-chat-popup>
+                        <button id="btn-chat-popup"></button>
+                        <span>Talk with Fina.AI</span>
+                    </div>
+                </div>
+            {% endblock %}
         </section>
     </main>
     {% block footer %}
         <footer class="d-flex flex-wrap justify-content-around py-3 my-4 border-top">
-            <p>&copy; 2024 Financial Manager. All rights reserved.</p>
+            <p>&copy; 2024 - {% now "Y" %} Financial Manager. All rights reserved.</p>
             <hr>
             <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
                 <li><a class="nav-link" href="{% url 'home' %}">Home</a></li>
@@ -103,6 +127,126 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <script type="text/javascript">
+        function handleResponse(response) {
+            const chatContainer = document.getElementById("chat-messages"); // seu container do chat
+            const msgCount = chatContainer.querySelectorAll(".ai-message").length;
+
+            const messageDiv = document.createElement("p");
+            const aiResponse = document.createElement("span");
+            const aiImage = document.createElement("img");
+
+            messageDiv.classList.add("ai-message");
+
+            aiImage.classList.add("ai-picture");
+
+            aiImage.src = "{% static '/assets/images/btn-chat-popup-background.svg' %}";
+            aiResponse.textContent = " " + response;
+
+            messageDiv.id = "message-" + msgCount;
+
+            messageDiv.appendChild(aiImage);
+            messageDiv.appendChild(aiResponse);
+
+            chatContainer.appendChild(messageDiv);
+        }
+
+        function userMessage(response) {
+            const chatContainer = document.getElementById("chat-messages"); // seu container do chat
+            const msgCount = chatContainer.querySelectorAll(".user-message").length || 0;
+
+            const messageDiv = document.createElement("p");
+            const userResponse = document.createElement("span");
+            const userImage = document.createElement("img");
+
+            messageDiv.classList.add("user-message");
+
+            userImage.classList.add("user-picture");
+
+            userImage.src = "{% static 'assets/images/account-circle-svgrepo-com.svg' %}";
+
+            userResponse.textContent = " " + response;
+
+            messageDiv.id = "message-" + msgCount;
+
+            messageDiv.appendChild(userImage);
+            messageDiv.appendChild(userResponse);
+
+            chatContainer.appendChild(messageDiv);
+        }
+            
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        async function getAiResponse(data) {
+            if (data.length > 200) {
+                handleResponse("Try a new question. Max length of characters is 200.");
+                return;
+            }
+            try {
+                const res = await fetch('/chat/', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        'X-CSRFToken': getCookie("csrftoken") 
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ message: data }),
+                });
+
+                if (!res.ok) throw new Error(`Erro: ${res.status}`);
+
+                const json = await res.json();
+
+                handleResponse(json.message.content || JSON.stringify(json));
+            } catch (err) {
+                handleResponse("Erro: " + err.message);
+            }
+        }
+
+        document.getElementById("form-chat-text").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const input = document.getElementById("input-chat-text");
+            getAiResponse(input.value);
+            userMessage(input.value);
+            input.value = "";
+        });
+
+        var chatOpacityVisibility = false;
+
+        document.getElementById("btn-chat-popup").addEventListener("click", () => {
+            if (chatOpacityVisibility) {
+                chatOpacityVisibility = false;
+                document.getElementById("chat-popup").style.opacity = 0;
+            } else {
+                chatOpacityVisibility = true;
+                document.getElementById("chat-popup").style.opacity = 1;
+            }            
+        });
+
+        {% if messages %}
+            var messages = [
+                {% for message in messages %}
+                    "{{ message }}"{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            ];
+    
+            messages.forEach(function(message) {
+                window.alert(message);
+            });
+        {% endif %}
+
         function setLocalStorage(tema) {
             localStorage.setItem('tema', tema);
         }
@@ -143,19 +287,5 @@
             }
         });
     </script>
-    <script type="text/javascript">
-        {% if messages %}
-            var messages = [
-                {% for message in messages %}
-                    "{{ message }}"{% if not loop.last %}, {% endif %}
-                {% endfor %}
-            ];
-    
-            messages.forEach(function(message) {
-                window.alert(message);
-            });
-        {% endif %}
-    </script>
 </body>
-
 </html>

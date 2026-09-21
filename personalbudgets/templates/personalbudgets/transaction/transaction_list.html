@@ -13,7 +13,12 @@
         <form method="get" action="{% url 'transaction-create' %}">
             {% csrf_token %}
             <input type="hidden" name="budget" id="budget" value="{{ selected_budget.id }}">
-            <h3>New transaction <button type="submit" class="btn btn-primary">Create</button></h3>
+            <div class="feature-title">
+                <h3>New transaction</h3>
+                <button type="submit" class="btn btn-primary">
+                    Create
+                </button>
+            </div>
         </form>
     {% else %}
         <p>Can't create new transactions. Expired budget or not categories.</p>

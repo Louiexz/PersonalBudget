@@ -8,7 +8,12 @@
     <h2>Categories</h2>
     <h5>You transactions may have a category!</h5>
     <form method="post" action="{% url 'category-create'%}">
-        <h3>New Category <button type="submit" class="btn btn-primary">Create</button></h3>
+        <div class="feature-title">
+            <h3>New Category</h3>
+            <button type="submit" class="btn btn-primary">
+            Create
+            </button>
+        </div>
         {% csrf_token %}
     </form>
 
