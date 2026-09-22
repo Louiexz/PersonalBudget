@@ -12,20 +12,20 @@ budgets = [
     path('budget/delete/<uuid:pk>/', BudgetDelete.as_view(), name='budget-delete'),
 ]
 goals = [
-    path('goals', GoalList.as_view(), name='goal-list'),
+    path('goals/', GoalList.as_view(), name='goal-list'),
     path('goals/create', GoalCreate.as_view(), name='goal-create'),
     path('goals/update/<uuid:pk>', GoalUpdate.as_view(), name='goal-update'),
     path('goals/delete/<uuid:pk>', GoalDelete.as_view(), name='goal-delete'),
     path('goals/add/<uuid:pk>', GoalAdd.as_view(), name='goal-add'),
 ]
 categories = [
-    path('categories', CategoryList.as_view(), name='category-list'),
+    path('categories/', CategoryList.as_view(), name='category-list'),
     path('categories/create', CategoryCreate.as_view(), name='category-create'),
     path('categories/update/<uuid:pk>', CategoryUpdate.as_view(), name='category-update'),
     path('categories/delete/<uuid:pk>', CategoryDelete.as_view(), name='category-delete'),
 ]
 transactions = [
-    path('transactions', TransactionList.as_view(), name='transaction-list'),
+    path('transactions/', TransactionList.as_view(), name='transaction-list'),
     path('transactions/view', TransactionView.as_view(), name='transaction-view'),
     path('transactions/create', TransactionCreate.as_view(), name='transaction-create'),
     path('transactions/update/<uuid:pk>', TransactionUpdate.as_view(), name='transaction-update'),

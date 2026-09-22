@@ -4,10 +4,28 @@ import requests
 from django.http import JsonResponse
 from django.conf import settings
 from ..model import Category, PersonalBudget, Transaction, Goal
+from ..serializer import CategoryAiSerializer, PersonalBudgetAiSerializer, TransactionAiSerializer, GoalAiSerializer
 import traceback
 import logging
 
+
 logger = logging.getLogger(__name__)
+
+def get_context_for_ai(user):
+    # O Django ORM já filtra e traz apenas os dados
+    budgets_qs = PersonalBudget.objects.filter(user=user)
+    transactions_qs = Transaction.objects.filter(budget__user=user)
+    goals_qs = Goal.objects.filter(user=user)
+    categories_qs = Category.objects.filter(user=user)
+
+    context_data = {
+        "budgets": PersonalBudgetAiSerializer(budgets_qs, many=True).data,
+        "transactions": TransactionAiSerializer(transactions_qs, many=True).data,
+        "goals": GoalAiSerializer(goals_qs, many=True).data,
+        "categories": CategoryAiSerializer(categories_qs, many=True).data
+    }
+
+    return json.dumps(context_data, ensure_ascii=False, default=str)
 
 def AiChat(request):
     if request.method != 'POST':
@@ -24,17 +42,8 @@ def AiChat(request):
 
     # Serializa os dados do usuário em texto legível p/ o LLM
     user = request.user
-    budgets = PersonalBudget.objects.filter(user=user).values()
-    transactions = Transaction.objects.filter(budget__user=user).values()
-    goals = Goal.objects.filter(user=user).values()
-    categories = Category.objects.filter(user=user).values()
 
-    contexto = json.dumps({
-        "budgets": list(budgets),
-        "transactions": list(transactions),
-        "goals": list(goals),
-        "categories": list(categories),
-    }, ensure_ascii=False, default=str)
+    ai_context = get_context_for_ai(user)
 
     try:
         resposta = requests.post(
@@ -44,7 +53,7 @@ def AiChat(request):
                 "messages":
                 [{
                     "role": "user",
-                    "content": f"Using the data {contexto}, Answer the question {message}. Don't talk about the data if not asked about it. Never talk with others topics else financers, economy and education."
+                    "content": f"Using the data {ai_context}, Answer the question {message}. Don't talk about the data if not asked about it. Never talk with others topics else financy, economy and education. Be polite and concious in your answers."
                 }],
                 "stream": False
             },

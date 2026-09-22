@@ -3,87 +3,112 @@ Website - PersonalBudget: Take Control of Your Finances Quickly and Easily
 
 ## Funcionalidades e/ou (Páginas)
 
-    Users: Permite que novos usuários criem uma conta.
-    Goals: Permitir que os usuários estabeleçam, monitorem e gerenciem suas metas financeiras, como economizar para uma viagem.
-    Budgets: Permitir que os usuários criem, gerenciem e monitorem orçamentos, ajudando-os a controlar suas finanças.
-    Transactions categories: Facilitar a organização e análise das transações financeiras dos usuários, permitindo que eles categorizaram suas receitas.
-    Transactions: Permitir que os usuários registrem, organizem e analisem suas transações financeiras.
-    Dashboard: Fornecer uma visão consolidada e interativa das finanças do usuário, permitindo que ele monitore seus orçamentos, metas, categorias de transações e transações de forma rápida e eficiente.
+    Users: Allow new users to create an account.
+    Virtual Intelligence Assistant: Chat with the AI, get tips and have your questions answered (with limited usage on the free plan).
+    Goals: Allow users to set, monitor, and manage their financial goals, such as saving for a trip.
+    Budgets: Allow users to create, manage, and monitor budgets, helping them control their finances.
+    Transaction Categories: Make it easy to organize and analyze users' financial transactions by allowing them to categorize their income. Transactions: Allow users to record, organize, and analyze their financial transactions.
+    Dashboard: Provide a consolidated, interactive overview of the user's finances, enabling them to quickly and efficiently monitor their budgets, goals, transaction categories, and transactions.
 
 ## Pré-requisitos
 
 ### Certifique-se de ter o seguinte instalado antes de começar:
   
      Python 3
-     Ollama
-     Modelo local ou em nuvem de sua preferência   
-     AnythingLLM Desktop
+     Conta no Ollama (https://ollama.com/)
 
-## Instalação e Uso
+## Instalação e Uso (Teste)
 
-1. siga os seguintes passos:
+- Acesse:
+        https://personalbudget-ii4q.onrender.com/
 
-- Clone o repositório:
+## Instalação e Uso (Localmente)
+
+1. Clone o repositório:
 
         git clone https://github.com/Louiexz/PersonalBudget.git
         cd PersonalBudget
- 
- - Para funcionar:
+
+2. Configure as variáveis de ambiente (crie um arquivo .env na raiz do projeto):
+
+    DEBUG=False (Em caso de produção)
+    SECRET_KEY= ("Gere uma com: python -c \"from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())\")
+    ALLOWED_HOSTS=localhost,127.0.0.1
+    API_TOKEN= (Criar key do Ollama: https://ollama.com/settings/keys)
+     
+3. Ambiente virtual (evita conflito com as dependências que possui):
 
         Crie e ative um ambiente virtual (venv): https://docs.python.org/pt-br/3/library/venv.html
 
- - Instale as dependências:
+4. Ative o ambiente virtual:
+
+    - Linux (Git Bash):
+        source .NomeDaPasta/bin/activate
+
+    - Windows (Git Bash):
+        "source venv/Scripts/activate" ou ". venv/Scripts/activate"
+
+5. Instale as dependências:
 
         pip install -r requirements.txt
  
- - Realize as migrações
+6. Realize as migrações
 
         python manage.py migrate
 
- - Execute o aplicativo:
+7. Execute o aplicativo:
 
         python manage.py runserver
 
- 5. Acesse o chat:
+8. Acesse o chat:
 
     - Acesse o link ou abra um navegador e vá para http://127.0.0.1:8000/
 
 ## Estrutura do Projeto
 
-    myproject/
+    PersonalBudget/
     │
     ├── run.py
-    ├── myproject/          # Diretório do projeto
+    ├── api/             # Diretório do projeto
     │   ├── __init__.py
-    │   ├── settings.py     # Configurações do projeto
-    │   ├── urls.py         # Mapeamento de URLs
-    │   ├── asgi.py         # Configuração para ASGI
-    │   └── wsgi.py         # Configuração para WSGI
+    │   ├── settings.py      # Configurações do projeto
+    │   ├── urls.py          # Mapeamento de URLs
+    │   ├── asgi.py          # Configuração para ASGI
+    │   └── wsgi.py          # Configuração para WSGI
+    │   
+    ├── data/            # Dados para utilizar como exemplo
+    │   ├── budgets.csv      # Orçamentos (CSV)
+    │   ├── goals.json       # Metas (JSON)
+    │   ├── categories.json  # Categorias de transações (JSON)
+    │   └── transactions.csv # Histórico de transações (CSV)
+    │   
+    ├── docs/            # Documentações do projeto
+    │   ├── 01-documentacao-agente.md     # Caso de uso e arquitetura
+    │   ├── 02-base-conhecimento.md       # Estratégia de dados
+    │   ├── 03-prompts.md                 # Engenharia de prompts
+    │   ├── 04-metricas.md                # Avaliação e métricas
+    │   └── 05-pitch.md                   # Roteiro do pitch
     │
-    ├── personalbudgets/   # Um aplicativo Django
-    │   ├── migrations/     # Arquivos de migração de banco de dados
-    │   ├── model/          # Diretório dos modelos de dados
-    │   ├── static/         # Diretório de arquivos estaticos (css, js, img)
-    │   ├── templates/      # Diretório dos templates html
-    │   ├── views/          # Diretório das lógicas de visualizações
+    ├── personalbudgets/ # Aplicativo principal django
     │   ├── __init__.py
-    │   ├── admin.py        # Configurações do admin
-    │   ├── apps.py         # Configurações do aplicativo
-    │   ├── tests.py        # Testes do aplicativo
-    │   └── urls.py         # URLs específicas do aplicativo
+    │   ├── migrations/      # Arquivos de migração de banco de dados
+    │   ├── model/           # Diretório dos modelos de dados
+    │   ├── static/          # Diretório de arquivos estaticos (css, js, img)
+    │   ├── templates/       # Diretório dos templates html
+    │   ├── views/           # Diretório das lógicas de visualizações    
+    │   ├── admin.py         # Configurações do admin
+    │   ├── apps.py          # Configurações do aplicativo
+    │   ├── tests.py         # Testes do aplicativo
+    │   └── urls.py          # URLs específicas do aplicativo
     │
-    ├── manage.py           # Script de gerenciamento do projeto
+    ├── manage.py            # Script de gerenciamento do projeto
     │
-    ├── requirements.txt    # Dependências do projeto
+    ├── requirements.txt     # Dependências do projeto
     │
-    └── db.sqlite3          # Banco de dados SQLite (Criado com o migrate)
+    └── db.sqlite3           # Banco de dados SQLite (Criado com o migrate)
 
 ## Contribuições
 
-Artur Ramos - [@4rturr](https://github.com/4rturr)<br>
-Carlos Eduardo - [@carlos-1ima](https://github.com/carlos-1ima)<br>
 Luiz Augusto - [@Louiexz](https://github.com/Louiexz)<br>
-Paulo Arthur - [@pauludelimaa](https://github.com/pauludelimaa)<br>
-Vinicius José - [@ViniciusRKX](https://github.com/ViniciusRKX)
 
 Contribuições restritas! Analisaremos issues e pull requests.
